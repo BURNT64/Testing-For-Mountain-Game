@@ -11,6 +11,33 @@
 
 using namespace std;
 
+class IncorrectFileFormatException : public std::exception {
+public:
+    IncorrectFileFormatException(const std::string& message) : message_(message) {}
+    const char* what() const noexcept override { return message_.c_str(); }
+private:
+    std::string message_;
+};
+
+void readFile(const std::string& filename) {
+    try {
+        std::ifstream file(filename);
+        if (!file.is_open()) {
+            throw std::runtime_error("File could not be opened");
+        }
+
+        // Code to read file and check format
+        bool formatIsIncorrect = true;
+        if (formatIsIncorrect) {
+            throw IncorrectFileFormatException("File format is incorrect");
+        }
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        exit(1);
+    }
+}
+
 int main()
 {
     std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Icelandic Highlands.txt", "Pyrenees.txt" };

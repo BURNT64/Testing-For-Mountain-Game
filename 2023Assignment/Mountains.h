@@ -14,3 +14,4 @@ public:
     std::string getRandomMountain();
     bool checkRange(std::string mountain, std::string range);
 };
+

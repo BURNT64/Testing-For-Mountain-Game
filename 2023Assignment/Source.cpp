@@ -1,5 +1,4 @@
 #include "Mountains.h"
-#include "Source.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -13,29 +12,16 @@
 
 using namespace std;
 
-void readFile(const std::string& filename) 
-{
-    try
-    {
-        std::ifstream file(filename);
-        if (!file.is_open()) 
-        {
-            throw std::runtime_error("File could not be opened");
-        }
-
-        // Code to read file and check format
-        bool formatIsIncorrect = true;
-        if (formatIsIncorrect) 
-        {
-            throw IncorrectFileFormatException("File format is incorrect");
-        }
-    }
-    catch (const std::exception& e) 
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-        exit(1);
-    }
-}
+std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Icelandic Highlands.txt", "Pyrenees.txt" };
+Mountains mountains(filenames); // create a Mountains object
+int correctScore = 0; // keep track of the user's correct answers
+int incorrectScore = 0; // keep track of the users wrong answers
+int questions = 0; // keep track of the number of questions asked
+std::string mountain; // mountain name
+std::string range; // mountain range
+std::vector<std::pair<std::string, double>> correct_answers; // keep track of correct answers and their response times
+std::vector<std::pair<std::string, double>> incorrect_answers; // keep track of correct answers and their response times
+std::atomic<bool> timed_out(false); // flag to indicate if the user has timed out
 
 void createUser() 
 {

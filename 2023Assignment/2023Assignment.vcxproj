@@ -177,6 +177,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameClass.cpp" />
     <ClCompile Include="Mountains.cpp" />
     <ClCompile Include="Source.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Test|x64'">true</ExcludedFromBuild>
@@ -186,8 +187,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameClass.h" />
     <ClInclude Include="Mountains.h" />
-    <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

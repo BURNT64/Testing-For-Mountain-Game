@@ -1,17 +1,16 @@
 #pragma once
-#include<vector>
-#include<string>
-#include<iostream>
+#include <vector>
+#include <string>
+#include <map>
+using namespace std;
 
 class Mountains
 {
+    std::vector<std::string> mountains;
+    std::map<std::string, std::vector<std::string>> mountainRanges;
+
 public:
-	//Time complexity: 
-	Mountains(std::vector<std::string>& filenames);
-
-	//Time complexity:
-	std::string getRandomMountain();
-
-	//Time complexity:
-	bool checkRange(std::string mountain, std::string range);
+    Mountains(std::vector<std::string>& filenames);
+    std::string getRandomMountain();
+    bool checkRange(std::string mountain, std::string range);
 };

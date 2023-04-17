@@ -29,6 +29,15 @@ BOOST_AUTO_TEST_CASE(TestGetRandomMountain)
     BOOST_REQUIRE(mountain1 != mountain2);
 }
 
+// Test getRandomMountain method with empty filenames vector
+BOOST_AUTO_TEST_CASE(TestGetRandomMountainWithEmptyFilenames)
+{
+    std::vector<std::string> filenames = {};
+    Mountains mountains(filenames);
+    std::string mountain = mountains.getRandomMountain();
+    BOOST_REQUIRE(mountain == "");
+}
+
 BOOST_AUTO_TEST_CASE(TestCheckRange)
 {
     std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", };

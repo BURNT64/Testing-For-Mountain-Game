@@ -1,4 +1,5 @@
 #include "Mountains.h"
+#include "Source.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,52 +9,36 @@
 #include <thread>
 #include <map>
 #include <iomanip>
+#include <utility>
 
 using namespace std;
 
-class IncorrectFileFormatException : public std::exception {
-public:
-    IncorrectFileFormatException(const std::string& message) : message_(message) {}
-    const char* what() const noexcept override { return message_.c_str(); }
-private:
-    std::string message_;
-};
-
-void readFile(const std::string& filename) {
-    try {
+void readFile(const std::string& filename) 
+{
+    try
+    {
         std::ifstream file(filename);
-        if (!file.is_open()) {
+        if (!file.is_open()) 
+        {
             throw std::runtime_error("File could not be opened");
         }
 
         // Code to read file and check format
         bool formatIsIncorrect = true;
-        if (formatIsIncorrect) {
+        if (formatIsIncorrect) 
+        {
             throw IncorrectFileFormatException("File format is incorrect");
         }
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e) 
+    {
         std::cerr << "Error: " << e.what() << std::endl;
         exit(1);
     }
 }
 
-int main()
+void createUser() 
 {
-    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Icelandic Highlands.txt", "Pyrenees.txt" };
-    // create a Mountains object
-    Mountains mountains(filenames);
-
-    int correctScore = 0; // keep track of the user's correct answers
-    int incorrectScore = 0; // keep track of the users wrong answers
-    int questions = 0; // keep track of the number of questions asked
-    std::string mountain; // mountain name
-    std::string range; // mountain range
-    std::vector<std::pair<std::string, double>> correct_answers; // keep track of correct answers and their response times
-    std::vector<std::pair<std::string, double>> incorrect_answers; // keep track of correct answers and their response times
-    std::atomic<bool> timed_out(false); // flag to indicate if the user has timed out
-
-
     cout << "---------------------------------------------------------------\n";
     cout << "Guess the random mountain!!!! Created by Will Allwood 2022-2023\n";
     cout << "---------------------------------------------------------------\n\n";
@@ -86,9 +71,12 @@ int main()
     else
     {
         cout << "Thats a shame... come back when you are ready to play" << endl;
-        return 0;
+        exit(0);
     }
+}
 
+void mechanics() 
+{
     while (true)
     {
         // get a random mountain name
@@ -142,12 +130,17 @@ int main()
         }
         std::cout << "Your score is " << correctScore << "/" << questions << ".\n";
     }
+}
 
+void printResults(const std::string& playerName, int questions, int correctScore, int incorrectScore,
+    const std::vector<std::pair<std::string, double>>& correct_answers,
+    const std::vector<std::pair<std::string, double>>& incorrect_answers)
+{
     // print out the user's results
     std::cout << "\n\n\n";
     std::cout << "Results:\n";
     std::cout << "----------------------------------------\n";
-    std::cout << "Player Name: " << playerName << "\n";
+    std::cout << "Player ID: " << playerName << "\n";
     std::cout << "Total questions asked: " << questions << "\n";
     std::cout << "Total correct answers: " << correctScore << "\n";
     std::cout << "Total incorrect answers: " << incorrectScore << "\n";
@@ -215,5 +208,12 @@ int main()
 
     std::cout << "Results written into CSV file" << std::endl;
     std::cout << "Thank you for playing!" << std::endl;
+}
+
+int main()
+{
+    createUser();
+    mechanics();
+    printResults("Player 1", questions, correctScore, incorrectScore, correct_answers, incorrect_answers);
     return 0;
 }

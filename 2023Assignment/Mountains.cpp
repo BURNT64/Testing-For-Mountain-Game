@@ -56,3 +56,4 @@ bool Mountains::checkRange(std::string mountain, std::string range)
     // Check whether the given mountain is in the range
     return std::find(it->second.begin(), it->second.end(), mountain) != it->second.end();
 }
+

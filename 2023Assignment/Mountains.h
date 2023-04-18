@@ -2,7 +2,14 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <stdexcept>
 using namespace std;
+
+class IncorrectFileFormatException : public std::runtime_error {
+public:
+    IncorrectFileFormatException(const std::string& message)
+        : std::runtime_error(message) {}
+};
 
 class Mountains
 {

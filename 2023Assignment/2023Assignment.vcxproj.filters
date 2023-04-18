@@ -24,15 +24,9 @@
     <ClCompile Include="Tests (DONOTEDIT).cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Mountains.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

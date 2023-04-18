@@ -15,18 +15,18 @@ Mountains::Mountains(std::vector<std::string>& filenames)
     {
         std::ifstream file(filename);
         std::string line;
-
         // Extract the range name from the filename
         std::string rangeName = filename.substr(0, filename.find(".txt"));
-
         // Add an empty vector for the current range to the mountainRanges map
         mountainRanges[rangeName] = std::vector<std::string>();
-
         while (std::getline(file, line))
         {
+            // Check that the line string is not empty and does not contain any whitespace
+            if (line.empty() || std::isspace(line.front()) || std::isspace(line.back())) {
+                throw IncorrectFileFormatException("Incorrect file format in " + filename);
+            }
             // Add the line string to the appropriate range-specific vector
             mountainRanges[rangeName].push_back(line);
-
             // Add the line string to the "mountains" vector
             mountains.push_back(line);
         }

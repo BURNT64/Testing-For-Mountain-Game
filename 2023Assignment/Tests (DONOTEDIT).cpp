@@ -47,5 +47,13 @@ BOOST_AUTO_TEST_CASE(TestCheckRange)
     BOOST_CHECK(mountains.checkRange("Gerlach", "Carpathians"));
 }
 
+BOOST_AUTO_TEST_CASE(IncorrectFileFormatExceptionTest)
+{
+    BOOST_CHECK_THROW(
+        throw IncorrectFileFormatException("test message"),
+        IncorrectFileFormatException
+    );
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 

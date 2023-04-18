@@ -9,11 +9,12 @@
 #include <sstream>
 #include <random>
 
-using namespace std;
-
 /**
  * @brief Custom exception class for incorrect file format errors
  *
+ * This class represents a custom exception that can be thrown when there is an error in the
+ * file format of the data that is being read. It inherits from the standard C++ exception class
+ * `std::runtime_error`.
  */
 class IncorrectFileFormatException : public std::runtime_error {
 public:
@@ -30,19 +31,28 @@ public:
 /**
  * @brief A class for working with a set of mountain names and ranges
  *
+ * This class represents a set of mountain names and ranges that can be read from a set of files,
+ * and provides methods for selecting a random mountain and checking whether a given mountain
+ * belongs to a given range.
  */
 class Mountains
 {
 
-    std::vector<std::string> mountains;
-    std::map<std::string, std::vector<std::string>> mountainRanges;
+    std::vector<std::string> mountains; /**< Vector of all mountain names. */
+    std::map<std::string, std::vector<std::string>> mountainRanges; /**< Map that associates each range name with a vector of mountain names in that range. */
 
 public:
-
     /**
      * @brief Construct a new Mountains object from a vector of filenames
      *
      * @param filenames Vector of filenames containing mountain and range data
+     *
+     * This constructor takes a vector of filenames containing mountain and range data, reads the data
+     * from each file, and stores the mountain names and ranges internally.
+     *
+     * Time complexity: O(N*M), where N is the number of files and M is the number of lines in each file.
+     *
+     * @throw IncorrectFileFormatException if the file format is incorrect.
      */
     Mountains(std::vector<std::string>& filenames)
     {
@@ -69,11 +79,14 @@ public:
         }
     }
 
-    /**
-     * @brief Get a random mountain name from the list of all mountain names
-     *
-     * @return std::string A random mountain name
+     /**
+     * @brief Gets the name of a random mountain from the collection.
+     * 
+     * @return A string containing the name of a random mountain.
+     * 
+     * @note This function has a time complexity of O(1).
      */
+
     std::string getRandomMountain()
     {
         if (mountains.empty()) {
@@ -87,13 +100,16 @@ public:
     }
 
     /**
-     * @brief Check whether a given mountain belongs to a given range
+     * @brief Checks if a given mountain belongs to a given range.
      *
-     * @param mountain The name of the mountain to check
-     * @param range The name of the range to check
-     * @return true if the mountain belongs to the range
-     * @return false if the mountain does not belong to the range
+     * @param mountain A string containing the name of the mountain to be checked.
+     * @param range A string containing the name of the range to be checked.
+     *
+     * @return true if the mountain belongs to the range, false otherwise.
+     *
+     * @note This function has a time complexity of O(log n), where n is the average number of mountains per range.
      */
+
     bool checkRange(std::string mountain, std::string range)
     {
         // Look up the range associated with the given mountain in the mountainRanges map

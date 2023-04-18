@@ -55,4 +55,25 @@ BOOST_AUTO_TEST_CASE(IncorrectFileFormatExceptionTest)
     );
 }
 
+BOOST_AUTO_TEST_CASE(TestCheckRangeWithInvalidInputs)
+{
+    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt" };
+    Mountains mountains(filenames);
+
+    // Check for invalid range
+    BOOST_CHECK(!mountains.checkRange("Piz Bernina", "InvalidRange"));
+    // Check for invalid mountain name
+    BOOST_CHECK(!mountains.checkRange("InvalidMountain", "Alps"));
+    // Check for invalid mountain name and invalid range
+    BOOST_CHECK(!mountains.checkRange("InvalidMountain", "InvalidRange"));
+}
+
+BOOST_AUTO_TEST_CASE(TestGetRandomMountainWithDuplicateFilenames)
+{
+    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Alps.txt" };
+    Mountains mountains(filenames);
+
+    BOOST_REQUIRE(mountains.getRandomMountain() != "");
+}
+
 BOOST_AUTO_TEST_SUITE_END()

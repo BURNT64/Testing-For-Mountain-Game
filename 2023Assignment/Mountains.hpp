@@ -96,7 +96,7 @@ public:
         }
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dis(0, mountains.size() - 1);
+        std::uniform_int_distribution<int> dis(0, static_cast<int>(mountains.size()) - 1);
         int randomIndex = dis(gen);
         return mountains[randomIndex];
     }
@@ -278,7 +278,7 @@ public:
                 }
                 std::cout << "Your score is " << correctScore << "/" << questions << ".\n";
             }
-            catch (const std::invalid_argument& e) {
+            catch (const std::invalid_argument&) {
                 std::cout << "\nSorry, the mountain range you typed in does not exist in this context.\n";
                 std::cin.clear(); // clear the error flag
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the input

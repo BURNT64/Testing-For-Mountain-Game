@@ -1,0 +1,78 @@
+\hypertarget{classuser_interface}{}\doxysection{user\+Interface Class Reference}
+\label{classuser_interface}\index{userInterface@{userInterface}}
+
+
+A class that contains methods that construct the user interface of the game.  
+
+
+
+
+{\ttfamily \#include $<$Mountains.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classuser_interface_a5d939ed595e324c265c264914abfa105}{start\+Quiz}} ()
+\begin{DoxyCompactList}\small\item\em Starts the quiz game and provides instructions to the user. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classuser_interface_a11212a688b0fc87ea25715e24ceacd4e}{mechanics}} ()
+\begin{DoxyCompactList}\small\item\em Runs the quiz game and keeps track of user\textquotesingle{}s responses and scores. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classuser_interface_a1a6cb435a5a359d9c947d1c298a97ccb}{print\+Results}} ()
+\begin{DoxyCompactList}\small\item\em Prints the final results of the quiz game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that contains methods that construct the user interface of the game. 
+
+This class represents a user interface for the mountain quiz game. The class keeps track of the user\textquotesingle{}s responses, scores, and other game statistics while also providing methods for starting and running the game, as well as printing the final game results, these results are then collected into a csv file. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classuser_interface_a11212a688b0fc87ea25715e24ceacd4e}\label{classuser_interface_a11212a688b0fc87ea25715e24ceacd4e}} 
+\index{userInterface@{userInterface}!mechanics@{mechanics}}
+\index{mechanics@{mechanics}!userInterface@{userInterface}}
+\doxysubsubsection{\texorpdfstring{mechanics()}{mechanics()}}
+{\footnotesize\ttfamily void user\+Interface\+::mechanics (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Runs the quiz game and keeps track of user\textquotesingle{}s responses and scores. 
+
+This method runs the quiz game and prompts the user to guess the mountain range of a randomly selected mountain. The user\textquotesingle{}s response time is measured and recorded, and the user\textquotesingle{}s score is updated based on the correctness and timeliness of their response. The game continues until the user types \char`\"{}exit\char`\"{} or \char`\"{}quit\char`\"{}.
+
+\begin{DoxyNote}{Note}
+This method has multiple operations all with different time complexities Initializing the \mbox{\hyperlink{class_mountains}{Mountains}} object with a list of filenames is determined by the size of the files used therefore this operation would be O(\+N), when the questions loop indefinatly until the user types exit that is consider O(infinity), the operation checking if the mountain belongs to a certain range is considered O(\+Log N) where N is the total number of mountains and the size of the data structure determines the complexity of the operation There are multiple operations under the O Notation of O(1) in this method, however, When calculating the overall time complexity these operations contribute very little to the overall running time as the input sizw of the project increases. these methods includes\+: Generating a random mountain name, measuring response time, checking if the user wants to exit, Converting the input letter to the full mountain range name, Checking if the response time is within 10 seconds\+: and Storing the correct/incorrect answer and response time in a vector. The overall time complexity would be O(∞log N), this is simplified from O(N + ∞log N) because the logarithmic term (∞log N) becomes more significant than the linear term (N) as the input size of the algorithm increases. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classuser_interface_a1a6cb435a5a359d9c947d1c298a97ccb}\label{classuser_interface_a1a6cb435a5a359d9c947d1c298a97ccb}} 
+\index{userInterface@{userInterface}!printResults@{printResults}}
+\index{printResults@{printResults}!userInterface@{userInterface}}
+\doxysubsubsection{\texorpdfstring{printResults()}{printResults()}}
+{\footnotesize\ttfamily void user\+Interface\+::print\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints the final results of the quiz game. 
+
+This method prints the final results of the quiz game, including the number of questions asked, the number of correct and incorrect answers, and the response times for each of the correct and incorrect answers. the results are then organised into a csv file before the user is then encouraged to exit the program.
+
+\begin{DoxyNote}{Note}
+This method has a time complexity of O(n), this is because it iterates through the list of questions and answers once to calculate the score and print the results. The time complexity will depend on the number of questions and answers provided as input. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classuser_interface_a5d939ed595e324c265c264914abfa105}\label{classuser_interface_a5d939ed595e324c265c264914abfa105}} 
+\index{userInterface@{userInterface}!startQuiz@{startQuiz}}
+\index{startQuiz@{startQuiz}!userInterface@{userInterface}}
+\doxysubsubsection{\texorpdfstring{startQuiz()}{startQuiz()}}
+{\footnotesize\ttfamily void user\+Interface\+::start\+Quiz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Starts the quiz game and provides instructions to the user. 
+
+This method displays a welcome message and provides instructions for the user to play the game. The method prompts the user to start the game by typing \char`\"{}yes\char`\"{}, and exits the program if the user types \char`\"{}no\char`\"{}.
+
+\begin{DoxyNote}{Note}
+This method has a constant time complexity of O(1). This method doesn\textquotesingle{}t depend on the input size and performs a fixed number of operations regardless of the input. the main purpose of the method is to collect the users playername and brief them on how the quiz mechanics will work. Players must type yes or no to begin the quiz or else an exception will be thrown saying its not a valid input. all iterations performed in the while loop are consistant as it loops based on if the user decided to type anything other than yes or no. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/will/source/repos/\+Testing-\/\+For-\/\+Mountain-\/\+Game/2023\+Assignment/Mountains.\+hpp\end{DoxyCompactItemize}

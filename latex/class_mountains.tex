@@ -1,0 +1,99 @@
+\hypertarget{class_mountains}{}\doxysection{Mountains Class Reference}
+\label{class_mountains}\index{Mountains@{Mountains}}
+
+
+A class for working with a set of mountain names and ranges.  
+
+
+
+
+{\ttfamily \#include $<$Mountains.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mountains_af0effedf7978e873f16ce6d71e761342}{Mountains}} (std\+::vector$<$ std\+::string $>$ \&filenames)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{class_mountains}{Mountains}} object from a vector of filenames. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{class_mountains_aabcb7b7418c5f61be4eeefb17349bc10}{get\+Random\+Mountain}} ()
+\begin{DoxyCompactList}\small\item\em Gets the name of a random mountain from the collection. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_mountains_afaa9dfe48b91154a0fc9a1ebf6b99d6c}{check\+Range}} (std\+::string mountain, std\+::string range)
+\begin{DoxyCompactList}\small\item\em Checks if a given mountain belongs to a given range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for working with a set of mountain names and ranges. 
+
+This class represents a set of mountain names and ranges that can be read from a set of files, and provides methods for selecting a random mountain and checking whether a given mountain belongs to a given range. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mountains_af0effedf7978e873f16ce6d71e761342}\label{class_mountains_af0effedf7978e873f16ce6d71e761342}} 
+\index{Mountains@{Mountains}!Mountains@{Mountains}}
+\index{Mountains@{Mountains}!Mountains@{Mountains}}
+\doxysubsubsection{\texorpdfstring{Mountains()}{Mountains()}}
+{\footnotesize\ttfamily Mountains\+::\+Mountains (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$ \&}]{filenames }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new \mbox{\hyperlink{class_mountains}{Mountains}} object from a vector of filenames. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filenames} & Vector of filenames containing mountain and range data\\
+\hline
+\end{DoxyParams}
+This constructor takes a vector of filenames containing mountain and range data, reads the data from each file, and stores the mountain names and ranges internally.
+
+Time complexity\+: O(\+N$\ast$\+M), where N is the number of files and M is the number of lines in each file.
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \mbox{\hyperlink{class_incorrect_file_format_exception}{Incorrect\+File\+Format\+Exception}}} & if the file format is incorrect. \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mountains_afaa9dfe48b91154a0fc9a1ebf6b99d6c}\label{class_mountains_afaa9dfe48b91154a0fc9a1ebf6b99d6c}} 
+\index{Mountains@{Mountains}!checkRange@{checkRange}}
+\index{checkRange@{checkRange}!Mountains@{Mountains}}
+\doxysubsubsection{\texorpdfstring{checkRange()}{checkRange()}}
+{\footnotesize\ttfamily bool Mountains\+::check\+Range (\begin{DoxyParamCaption}\item[{std\+::string}]{mountain,  }\item[{std\+::string}]{range }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks if a given mountain belongs to a given range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mountain} & A string containing the name of the mountain to be checked. \\
+\hline
+{\em range} & A string containing the name of the range to be checked.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the mountain belongs to the range, false otherwise.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function has a time complexity of O(log n), where n is the average number of mountains per range. 
+\end{DoxyNote}
+\mbox{\Hypertarget{class_mountains_aabcb7b7418c5f61be4eeefb17349bc10}\label{class_mountains_aabcb7b7418c5f61be4eeefb17349bc10}} 
+\index{Mountains@{Mountains}!getRandomMountain@{getRandomMountain}}
+\index{getRandomMountain@{getRandomMountain}!Mountains@{Mountains}}
+\doxysubsubsection{\texorpdfstring{getRandomMountain()}{getRandomMountain()}}
+{\footnotesize\ttfamily std\+::string Mountains\+::get\+Random\+Mountain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the name of a random mountain from the collection. 
+
+\begin{DoxyReturn}{Returns}
+A string containing the name of a random mountain.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function has a time complexity of O(1) because the time taken to execute the function is not determined by the size of the input. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/will/source/repos/\+Testing-\/\+For-\/\+Mountain-\/\+Game/2023\+Assignment/Mountains.\+hpp\end{DoxyCompactItemize}

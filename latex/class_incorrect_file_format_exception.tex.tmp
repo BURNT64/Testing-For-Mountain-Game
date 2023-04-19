@@ -1,0 +1,54 @@
+\hypertarget{class_incorrect_file_format_exception}{}\doxysection{Incorrect\+File\+Format\+Exception Class Reference}
+\label{class_incorrect_file_format_exception}\index{IncorrectFileFormatException@{IncorrectFileFormatException}}
+
+
+Custom exception class for incorrect file formats.  
+
+
+
+
+{\ttfamily \#include $<$Mountains.\+hpp$>$}
+
+
+
+Inheritance diagram for Incorrect\+File\+Format\+Exception\+:
+% FIG 0
+
+
+Collaboration diagram for Incorrect\+File\+Format\+Exception\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_incorrect_file_format_exception_a1446c37a3130e0876d88da5f8a1d292c}{Incorrect\+File\+Format\+Exception}} (const std\+::string \&message)
+\begin{DoxyCompactList}\small\item\em Construct a new Incorrect File Format Exception object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Custom exception class for incorrect file formats. 
+
+This is a custom exception class which is designed to be thrown in relatition to when there is an error with the file format and how data is read.
+
+It inherits from the standard C++ exception class of std\+::runtime\+\_\+error, this is so the exception can be caught by a catch block which will catch the exception of the. \`{}std\+::runtime\+\_\+error type. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_incorrect_file_format_exception_a1446c37a3130e0876d88da5f8a1d292c}\label{class_incorrect_file_format_exception_a1446c37a3130e0876d88da5f8a1d292c}} 
+\index{IncorrectFileFormatException@{IncorrectFileFormatException}!IncorrectFileFormatException@{IncorrectFileFormatException}}
+\index{IncorrectFileFormatException@{IncorrectFileFormatException}!IncorrectFileFormatException@{IncorrectFileFormatException}}
+\doxysubsubsection{\texorpdfstring{IncorrectFileFormatException()}{IncorrectFileFormatException()}}
+{\footnotesize\ttfamily Incorrect\+File\+Format\+Exception\+::\+Incorrect\+File\+Format\+Exception (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Incorrect File Format Exception object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Error message to be displayed \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/will/source/repos/\+Testing-\/\+For-\/\+Mountain-\/\+Game/2023\+Assignment/Mountains.\+hpp\end{DoxyCompactItemize}

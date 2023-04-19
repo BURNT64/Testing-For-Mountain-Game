@@ -1,0 +1,303 @@
+\hypertarget{_mountains_8hpp_source}{}\doxysection{C\+:/\+Users/will/source/repos/\+Testing-\/\+For-\/\+Mountain-\/\+Game/2023\+Assignment/\+Mountains.hpp}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_incorrect_file_format_exception}{IncorrectFileFormatException}}\ :\ \textcolor{keyword}{public}\ std::runtime\_error\ \{}
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_incorrect_file_format_exception_a1446c37a3130e0876d88da5f8a1d292c}{IncorrectFileFormatException}}(\textcolor{keyword}{const}\ std::string\&\ message)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ :\ std::runtime\_error(message)\ \{\}}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mountains}{Mountains}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ std::vector<std::string>\ mountains;\ }
+\DoxyCodeLine{00047\ \ \ \ \ std::map<std::string,\ std::vector<std::string>>\ mountainRanges;\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{class_mountains_af0effedf7978e873f16ce6d71e761342}{Mountains}}(std::vector<std::string>\&\ filenames)}
+\DoxyCodeLine{00063\ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ std::string\&\ filename\ :\ filenames)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ std::ifstream\ file(filename);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Extract\ the\ range\ name\ from\ the\ filename}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ rangeName\ =\ filename.substr(0,\ filename.find(\textcolor{stringliteral}{"{}.txt"{}}));}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ an\ empty\ vector\ for\ the\ current\ range\ to\ the\ mountainRanges\ map}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ mountainRanges[rangeName]\ =\ std::vector<std::string>();}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(file,\ line))}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ that\ the\ line\ string\ is\ not\ empty\ and\ does\ not\ contain\ any\ whitespace}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (line.empty()\ ||\ std::isspace(line.front())\ ||\ std::isspace(line.back()))\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{class_incorrect_file_format_exception}{IncorrectFileFormatException}}(\textcolor{stringliteral}{"{}Incorrect\ file\ format\ in\ "{}}\ +\ filename);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ the\ line\ string\ to\ the\ appropriate\ range-\/specific\ vector}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mountainRanges[rangeName].push\_back(line);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ the\ line\ string\ to\ the\ "{}mountains"{}\ vector}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mountains.push\_back(line);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ file.close();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00096\ \ \ \ \ std::string\ \mbox{\hyperlink{class_mountains_aabcb7b7418c5f61be4eeefb17349bc10}{getRandomMountain}}()}
+\DoxyCodeLine{00097\ \ \ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mountains.empty())\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ std::random\_device\ rd;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ std::mt19937\ gen(rd());}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ std::uniform\_int\_distribution<int>\ dis(0,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(mountains.size())\ -\/\ 1);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ randomIndex\ =\ dis(gen);}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ mountains[randomIndex];}
+\DoxyCodeLine{00106\ \ \ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_mountains_afaa9dfe48b91154a0fc9a1ebf6b99d6c}{checkRange}}(std::string\ mountain,\ std::string\ range)}
+\DoxyCodeLine{00120\ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Look\ up\ the\ range\ associated\ with\ the\ given\ mountain\ in\ the\ mountainRanges\ map}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ mountainRanges.find(range);}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ ==\ mountainRanges.end())}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ The\ given\ range\ does\ not\ exist}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ whether\ the\ given\ mountain\ is\ in\ the\ range}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::find(it-\/>second.begin(),\ it-\/>second.end(),\ mountain)\ !=\ it-\/>second.end();}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00140\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classuser_interface}{userInterface}}}
+\DoxyCodeLine{00141\ \{}
+\DoxyCodeLine{00142\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{string}\ UserResponse;\ \textcolor{comment}{//\ keep\ track\ of\ the\ user's\ response}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{string}\ playerName;\ \textcolor{comment}{//\ keep\ track\ of\ the\ playersName}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ validName\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordtype}{int}\ correctScore\ =\ 0;\ \textcolor{comment}{//\ keep\ track\ of\ the\ user's\ correct\ answers}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{int}\ incorrectScore\ =\ 0;\ \textcolor{comment}{//\ keep\ track\ of\ the\ users\ wrong\ answers}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{int}\ questions\ =\ 0;\ \textcolor{comment}{//\ keep\ track\ of\ the\ number\ of\ questions\ asked}}
+\DoxyCodeLine{00149\ \ \ \ \ std::vector<std::pair<std::string,\ double>>\ correct\_answers;\ \textcolor{comment}{//\ keep\ track\ of\ correct\ answers\ and\ their\ response\ times}}
+\DoxyCodeLine{00150\ \ \ \ \ std::vector<std::pair<std::string,\ double>>\ incorrect\_answers;\ \textcolor{comment}{//\ keep\ track\ of\ correct\ answers\ and\ their\ response\ times}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classuser_interface_a5d939ed595e324c265c264914abfa105}{startQuiz}}()}
+\DoxyCodeLine{00172\ \ \ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Guess\ the\ random\ mountain!!!!\ Created\ by\ Will\ Allwood\ 2022-\/2023\(\backslash\)n"{}};}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Welcome\ to\ the\ Mountain\ game!\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}You\ will\ be\ repeatedly\ presented\ with\ random\ mountain\ names\ and\ must\ guess\ which\ of\ four\ mountain\ ranges\ it\ is\ in\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!validName)\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Please\ enter\ your\ name\ (max\ 20\ characters):\ "{}};}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ cin\ >>\ playerName;}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ player's\ name\ is\ longer\ than\ 20\ characters}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (playerName.length()\ >\ 20)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nSorry\ your\ name\ cannot\ be\ longer\ than\ 20\ characters\ please\ try\ again.\(\backslash\)n"{}}\ <<\ endl;}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ validName\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ UserResponse;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Are\ you\ ready\ to\ take\ the\ quiz?\(\backslash\)n\(\backslash\)n"{}}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}yes/no"{}}\ <<\ endl;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ cin\ >>\ UserResponse;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (UserResponse\ ==\ \textcolor{stringliteral}{"{}yes"{}})}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ endl;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Wonderful\ let\ the\ game\ begin!!!"{}}\ <<\ endl;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}You\ will\ be\ given\ a\ series\ of\ random\ mountains\ based\ of\ 4\ mountain\ ranges"{}}\ <<\ endl;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}These\ mountain\ ranges\ are:\ Alps(A),\ Carpathians(C),\ Icelandic\ Highlands(I),\ and\ Pyrenees(P)"{}}\ <<\ endl;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}To\ answer,\ simply\ enter\ the\ letter\ corresponding\ to\ the\ mountain\ range\ (can\ be\ lower\ or\ upper\ case)"{}}\ <<\ endl;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Points\ are\ awarded\ for\ every\ correct\ question\ answered\ within\ 10\ seconds"{}}\ <<\ endl;}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}If\ you\ take\ more\ than\ 10\ seconds\ to\ answer\ you\ recieve\ no\ points"{}}\ <<\ endl;}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}your\ points\ will\ be\ tallied\ up\ based\ on\ how\ many\ questions\ you\ answered/got\ right"{}}\ <<\ endl;}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}This\ program\ is\ designed\ to\ run\ until\ you\ wish\ to\ exit/quit\ the\ program"{}}\ <<\ endl;}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}If\ you\ wish\ to\ exit\ the\ program\ at\ any\ time\ simply\ type\ exit/quit\ instead\ of\ an\ answer"{}}\ <<\ endl;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Good\ luck!!!\(\backslash\)n"{}}\ <<\ endl;}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (UserResponse\ ==\ \textcolor{stringliteral}{"{}no"{}})}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Thats\ a\ shame...\ come\ back\ when\ you\ are\ ready\ to\ play"{}}\ <<\ endl;}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit(0);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Invalid\ input!\ Please\ enter\ either\ 'yes'\ or\ 'no'."{}}\ <<\ endl;}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ \}}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classuser_interface_a11212a688b0fc87ea25715e24ceacd4e}{mechanics}}()}
+\DoxyCodeLine{00252\ \ \ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ std::vector<std::string>\ filenames\ =\ \{\ \textcolor{stringliteral}{"{}Alps.txt"{}},\ \textcolor{stringliteral}{"{}Carpathians.txt"{}},\ \textcolor{stringliteral}{"{}Icelandic\ Highlands.txt"{}},\ \textcolor{stringliteral}{"{}Pyrenees.txt"{}}\ \};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_mountains}{Mountains}}\ mountains(filenames);\ \textcolor{comment}{//\ create\ a\ Mountains\ object}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ std::string\ mountain;\ \textcolor{comment}{//\ mountain\ name}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ std::string\ range;\ \textcolor{comment}{//\ mountain\ range}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ std::atomic<bool>\ timed\_out(\textcolor{keyword}{false});\ \textcolor{comment}{//\ flag\ to\ indicate\ if\ the\ user\ has\ timed\ out}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\textcolor{keyword}{true})}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ get\ a\ random\ mountain\ name}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ mountain\ =\ mountains.\mbox{\hyperlink{class_mountains_aabcb7b7418c5f61be4eeefb17349bc10}{getRandomMountain}}();}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Which\ range\ is\ "{}}\ <<\ mountain\ <<\ \textcolor{stringliteral}{"{}\ in?\ (A,\ C,\ I,\ or\ P)\ "{}};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ measure\ response\ time}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ the\ user\ wants\ to\ exit}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}exit"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}quit"{}})}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin\ >>\ range;}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ convert\ input\ letter\ to\ full\ mountain\ range\ name}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}A"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}a"{}})}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\ =\ \textcolor{stringliteral}{"{}Alps"{}};}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}C"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}c"{}})}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\ =\ \textcolor{stringliteral}{"{}Carpathians"{}};}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}I"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}i"{}})}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\ =\ \textcolor{stringliteral}{"{}Icelandic\ Highlands"{}};}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}P"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}p"{}})}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ range\ =\ \textcolor{stringliteral}{"{}Pyrenees"{}};}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ the\ user\ wants\ to\ exit}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (range\ ==\ \textcolor{stringliteral}{"{}exit"{}}\ ||\ range\ ==\ \textcolor{stringliteral}{"{}quit"{}})}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ throw\ an\ exception\ if\ the\ input\ is\ not\ valid}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Invalid\ input"{}});}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ response\ time\ in\ seconds}}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ response\_time\ =\ std::chrono::duration\_cast<std::chrono::seconds>(end\ -\/\ start).count();}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ questions++;}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ the\ response\ time\ is\ within\ 10\ seconds}}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (response\_time\ >\ 10.0)\ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nSorry,\ you\ took\ too\ long\ to\ answer.\(\backslash\)n"{}};}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ check\ if\ the\ mountain\ belongs\ to\ the\ specified\ range}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mountains.\mbox{\hyperlink{class_mountains_afaa9dfe48b91154a0fc9a1ebf6b99d6c}{checkRange}}(mountain,\ range))\ \{}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nCorrect,\ "{}}\ <<\ mountain\ <<\ \textcolor{stringliteral}{"{}\ is\ in\ the\ "{}}\ <<\ range\ <<\ \textcolor{stringliteral}{"{}\ range.\(\backslash\)n"{}};}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ correctScore++;}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ store\ correct\ answer\ and\ response\ time\ in\ the\ vector}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ correct\_answers.push\_back(std::make\_pair(mountain,\ response\_time));}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nIncorrect,\ "{}}\ <<\ mountain\ <<\ \textcolor{stringliteral}{"{}\ is\ not\ in\ the\ "{}}\ <<\ range\ <<\ \textcolor{stringliteral}{"{}\ range.\(\backslash\)n"{}};}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ incorrectScore++;}
+\DoxyCodeLine{00315\ }
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ store\ incorrect\ answer\ and\ response\ time\ in\ the\ vector}}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ incorrect\_answers.push\_back(std::make\_pair(mountain,\ response\_time));}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Your\ score\ is\ "{}}\ <<\ correctScore\ <<\ \textcolor{stringliteral}{"{}/"{}}\ <<\ questions\ <<\ \textcolor{stringliteral}{"{}.\(\backslash\)n"{}};}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}\ (\textcolor{keyword}{const}\ std::invalid\_argument\&)\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nSorry,\ the\ mountain\ range\ you\ typed\ in\ does\ not\ exist\ in\ this\ context.\(\backslash\)n"{}};}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin.clear();\ \textcolor{comment}{//\ clear\ the\ error\ flag}}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cin.ignore(std::numeric\_limits<std::streamsize>::max(),\ \textcolor{charliteral}{'\(\backslash\)n'});\ \textcolor{comment}{//\ ignore\ the\ rest\ of\ the\ input}}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classuser_interface_a1a6cb435a5a359d9c947d1c298a97ccb}{printResults}}()}
+\DoxyCodeLine{00344\ \ \ \ \ \{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ print\ out\ the\ user's\ results}}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n\(\backslash\)n"{}};}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Results:\(\backslash\)n"{}};}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Player\ Name:\ "{}}\ <<\ playerName\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ questions\ asked:\ "{}}\ <<\ questions\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ correct\ answers:\ "{}}\ <<\ correctScore\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Total\ incorrect\ answers:\ "{}}\ <<\ incorrectScore\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Percentage\ correct:\ "{}}\ <<\ (double)correctScore\ /\ questions\ *\ 100\ <<\ \textcolor{stringliteral}{"{}\%\(\backslash\)n"{}};}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Percentage\ incorrect:\ "{}}\ <<\ (double)incorrectScore\ /\ questions\ *\ 100\ <<\ \textcolor{stringliteral}{"{}\%\(\backslash\)n"{}};}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ combine\ correct\ and\ incorrect\ answers\ into\ one\ vector}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ std::vector<std::pair<std::string,\ double>>\ all\_answers(correct\_answers);}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ all\_answers.insert(all\_answers.end(),\ incorrect\_answers.begin(),\ incorrect\_answers.end());}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ sort\ all\ answers\ by\ response\ time}}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ std::sort(all\_answers.begin(),\ all\_answers.end(),\ [](\textcolor{keyword}{const}\ std::pair<std::string,\ double>\&\ a,\ \textcolor{keyword}{const}\ std::pair<std::string,\ double>\&\ b)}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return\ a.second\ <\ b.second;}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ print\ out\ all\ answers\ in\ ascending\ order\ of\ response\ time}}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nAll\ answers\ in\ ascending\ order\ of\ response\ time:\(\backslash\)n"{}};}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ answer\ :\ all\_answers)}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ answer.first\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ answer.second\ <<\ \textcolor{stringliteral}{"{}\ seconds"{}};}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::find(correct\_answers.begin(),\ correct\_answers.end(),\ answer)\ !=\ correct\_answers.end())\ \{}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ (Correct)\(\backslash\)n"{}};}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ (Incorrect)\(\backslash\)n"{}};}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\(\backslash\)n"{}};}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ std::ifstream\ inputFile;}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ inputFile.open(\textcolor{stringliteral}{"{}results.csv"{}});}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (inputFile.peek()\ ==\ std::ifstream::traits\_type::eof())\ \{}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ the\ header\ line\ if\ the\ file\ is\ empty}}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ outputFile;}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ outputFile.open(\textcolor{stringliteral}{"{}results.csv"{}},\ std::ios::app);}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ outputFile\ <<\ \textcolor{stringliteral}{"{}Player\ Name,\ Correct\ Answers,\ Incorrect\ Answers,\ Response\ Time\ (s)\(\backslash\)n"{}};}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ outputFile.close();}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ header\ line\ has\ already\ been\ written}}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ firstLine;}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ std::getline(inputFile,\ firstLine);}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (firstLine\ !=\ \textcolor{stringliteral}{"{}Player\ Name,\ Correct\ Answers,\ Incorrect\ Answers,\ Response\ Time\ (s)"{}})\ \{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ the\ header\ line\ if\ it\ hasn't\ been\ written\ yet}}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ inputFile.close();}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ outputFile;}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outputFile.open(\textcolor{stringliteral}{"{}results.csv"{}},\ std::ios::app);}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outputFile.seekp(0,\ std::ios::beg);}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outputFile\ <<\ \textcolor{stringliteral}{"{}Player\ Name,\ Correct\ Answers,\ Incorrect\ Answers,\ Response\ Time\ (s)\(\backslash\)n"{}};}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outputFile.close();}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ inputFile.close();}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ data\ to\ the\ file}}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ std::ofstream\ outputFile;}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ outputFile.open(\textcolor{stringliteral}{"{}results.csv"{}},\ std::ios::app);}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ all\_answers.size();\ ++i)\ \{}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ outputFile\ <<\ playerName\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ correctScore\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ incorrectScore\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ all\_answers[i].second\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ outputFile.close();}
+\DoxyCodeLine{00414\ }
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Results\ written\ into\ CSV\ file"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Thank\ you\ for\ playing!"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00417\ \ \ \ \ \}}
+\DoxyCodeLine{00418\ \};}
+
+\end{DoxyCode}

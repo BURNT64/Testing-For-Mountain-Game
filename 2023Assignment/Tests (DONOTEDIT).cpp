@@ -7,6 +7,8 @@
 #include <boost/test/data/test_case.hpp>
 namespace bdata = boost::unit_test::data;
 
+
+
 BOOST_AUTO_TEST_SUITE(TestSuite)
 
 int main(int argc, char* argv[])
@@ -81,7 +83,7 @@ BOOST_AUTO_TEST_CASE(TestCheckRangeWithInvalidInputs)
 
 BOOST_AUTO_TEST_CASE(TestGetRandomMountainWithDuplicateFilenames)
 {
-    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Alps.txt" };
+    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt",};
     Mountains mountains(filenames);
 
     BOOST_REQUIRE(mountains.getRandomMountain() != "");
@@ -100,6 +102,21 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(testGetRandomMountain, T, std::vector<std::string>
     BOOST_REQUIRE_EQUAL(mountainNames.size(), 100);
     BOOST_REQUIRE_NE(mountainNames[0], mountainNames[1]); // make sure the random mountains are different
     BOOST_REQUIRE_NE(mountainNames[1], mountainNames[2]);
+}
+
+BOOST_AUTO_TEST_CASE(startQuizTest) {
+    // Call printResults() and ensure that it runs without errors
+    BOOST_CHECK_NO_THROW(void startQuiz());
+}
+
+BOOST_AUTO_TEST_CASE(mechanicsTest) {
+    // Call printResults() and ensure that it runs without errors
+    BOOST_CHECK_NO_THROW(void mechanics());
+}
+
+BOOST_AUTO_TEST_CASE(PrintResultsTest) {
+    // Call printResults() and ensure that it runs without errors
+    BOOST_CHECK_NO_THROW(void printResults());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

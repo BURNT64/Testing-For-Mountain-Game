@@ -87,4 +87,19 @@ BOOST_AUTO_TEST_CASE(TestGetRandomMountainWithDuplicateFilenames)
     BOOST_REQUIRE(mountains.getRandomMountain() != "");
 }
 
+BOOST_AUTO_TEST_CASE_TEMPLATE(testGetRandomMountain, T, std::vector<std::string>)
+{
+    std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", };
+    Mountains mountains(filenames);
+    std::vector<std::string> mountainNames;
+    for (int i = 0; i < 100; ++i) {
+        std::string mountain = mountains.getRandomMountain();
+        BOOST_REQUIRE_NE(mountain, "");
+        mountainNames.push_back(mountain);
+    }
+    BOOST_REQUIRE_EQUAL(mountainNames.size(), 100);
+    BOOST_REQUIRE_NE(mountainNames[0], mountainNames[1]); // make sure the random mountains are different
+    BOOST_REQUIRE_NE(mountainNames[1], mountainNames[2]);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

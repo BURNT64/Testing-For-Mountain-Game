@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <string>
 #include <map>
@@ -13,11 +13,14 @@
 using namespace std;
 
 /**
- * @brief Custom exception class for incorrect file format errors
+ * @brief Custom exception class for incorrect file formats. 
+ * 
+ * This is a custom exception class which is designed to be thrown 
+ * in relatition to when there is an error with the file format and how data is read. 
  *
- * This class represents a custom exception that can be thrown when there is an error in the
- * file format of the data that is being read. It inherits from the standard C++ exception class
- * `std::runtime_error`.
+ * It inherits from the standard C++ exception class of std::runtime_error, this is so 
+ * the exception can be caught by a catch block which will catch the exception of the.
+ *`std::runtime_error type.
  */
 class IncorrectFileFormatException : public std::runtime_error {
 public:
@@ -86,7 +89,8 @@ public:
      * 
      * @return A string containing the name of a random mountain.
      * 
-     * @note This function has a time complexity of O(1).
+     * @note This function has a time complexity of O(1) because the time taken to execute
+     * the function is not determined by the size of the input.
      */
 
     std::string getRandomMountain()
@@ -125,12 +129,12 @@ public:
 };
 
 /**
- * @brief A class for a quiz user interface.
+ * @brief A class that contains methods that construct the user interface of the game.
  *
- * This class represents a user interface for a mountain quiz game. The class
- * keeps track of the user's responses, scores, and other game statistics, and
- * provides methods for starting and running the game, as well as printing
- * the final game results.
+ * This class represents a user interface for the mountain quiz game. The class
+ * keeps track of the user's responses, scores, and other game statistics while also
+ * providing methods for starting and running the game, as well as printing
+ * the final game results, these results are then collected into a csv file. 
  */
 
 class userInterface
@@ -138,6 +142,7 @@ class userInterface
 private:
     string UserResponse; // keep track of the user's response
     string playerName; // keep track of the playersName
+    bool validName = false;
     int correctScore = 0; // keep track of the user's correct answers
     int incorrectScore = 0; // keep track of the users wrong answers
     int questions = 0; // keep track of the number of questions asked
@@ -153,18 +158,36 @@ public:
    * the user to play the game. The method prompts the user to start the
    * game by typing "yes", and exits the program if the user types "no".
    * 
-   * @note This method has a time complexity of O(1).
+   * @note This method has a constant time complexity of O(1).
    * This method doesn't depend on the input size and performs 
    * a fixed number of operations regardless of the input.
+   * the main purpose of the method is to collect the users playername
+   * and brief them on how the quiz mechanics will work. Players must type yes or no 
+   * to begin the quiz or else an exception will be thrown saying its not a valid input.
+   * all iterations performed in the while loop are consistant as it loops based on
+   * if the user decided to type anything other than yes or no. 
    */
    
     void startQuiz()
     {
-        cout << "\n\n---------------------------------------------------------------\n";
+        cout << "---------------------------------------------------------------\n";
         cout << "Guess the random mountain!!!! Created by Will Allwood 2022-2023\n";
         cout << "---------------------------------------------------------------\n\n";
         cout << "Welcome to the Mountain game!\n\n";
         cout << "You will be repeatedly presented with random mountain names and must guess which of four mountain ranges it is in\n\n";
+
+        while (!validName) {
+            cout << "Please enter your name (max 20 characters): ";
+            cin >> playerName;
+
+            // Check if the player's name is longer than 20 characters
+            if (playerName.length() > 20) {
+                cout << "\nSorry your name cannot be longer than 20 characters please try again.\n" << endl;
+            }
+            else {
+                validName = true;
+            }
+        }
 
         string UserResponse;
         while (true)
@@ -207,8 +230,22 @@ public:
      * and recorded, and the user's score is updated based on the correctness and
      * timeliness of their response. The game continues until the user types "exit"
      * or "quit".
-     * @note This method has a time complexity of O(infinity) as it runs an infinite loop 
-     * and doesn't depend on the input size, so it doesn't have a finite time complexity.
+     * 
+     * @note This method has multiple operations all with different time complexities
+     * Initializing the Mountains object with a list of filenames is determined by the size of 
+     * the files used therefore this operation would be O(N),
+     * when the questions loop indefinatly until the user types exit that is consider O(infinity), 
+     * the operation checking if the mountain belongs to a certain range is considered O(Log N) where N
+     * is the total number of mountains and the size of the data structure determines the complexity of the operation
+     * There are multiple operations under the O Notation of O(1) in this method, however,
+     * When calculating the overall time complexity these operations contribute very little
+     * to the overall running time as the input sizw of the project increases. these methods includes:
+     * Generating a random mountain name, measuring response time, checking if the user wants to exit,
+     * Converting the input letter to the full mountain range name, Checking if the response time is within 10 seconds: 
+     * and Storing the correct/incorrect answer and response time in a vector.
+     * The overall time complexity would be O(∞log N), this is simplified from O(N + ∞log N) because 
+     * the logarithmic term (∞log N) becomes more significant than the linear term (N) as the input size of 
+     * the algorithm increases.
      */
 
     void mechanics()
@@ -244,6 +281,10 @@ public:
                     range = "Icelandic Highlands";
                 else if (range == "P" || range == "p")
                     range = "Pyrenees";
+
+                // check if the user wants to exit
+                else if (range == "exit" || range == "quit")
+                        break;
                 else {
                     // throw an exception if the input is not valid
                     throw std::invalid_argument("Invalid input");
@@ -291,10 +332,11 @@ public:
      *
      * This method prints the final results of the quiz game, including the number
      * of questions asked, the number of correct and incorrect answers, and the
-     * response times for each of the correct and incorrect answers.
-     * @note This method has a time complexity of O(n) as it
-     * iterates through the list of questions and answers once 
-     * to calculate the score and print the results. 
+     * response times for each of the correct and incorrect answers. the results are then 
+     * organised into a csv file before the user is then encouraged to exit the program. 
+     * 
+     * @note This method has a time complexity of O(n), this is because it iterates through 
+     * the list of questions and answers once to calculate the score and print the results. 
      * The time complexity will depend on the number of questions and answers provided as input.
      */
 

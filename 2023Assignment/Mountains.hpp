@@ -39,7 +39,7 @@ public:
  */
 class Mountains
 {
-
+private:
     std::vector<std::string> mountains; /**< Vector of all mountain names. */
     std::map<std::string, std::vector<std::string>> mountainRanges; /**< Map that associates each range name with a vector of mountain names in that range. */
 
@@ -124,21 +124,40 @@ public:
     }
 };
 
-std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Icelandic Highlands.txt", "Pyrenees.txt" };
-Mountains mountains(filenames); // create a Mountains object
-std::atomic<bool> timed_out(false); // flag to indicate if the user has timed out
-int correctScore = 0; // keep track of the user's correct answers
-int incorrectScore = 0; // keep track of the users wrong answers
-int questions = 0; // keep track of the number of questions asked
-std::string mountain; // mountain name
-std::string range; // mountain range
-std::vector<std::pair<std::string, double>> correct_answers; // keep track of correct answers and their response times
-std::vector<std::pair<std::string, double>> incorrect_answers; // keep track of correct answers and their response times
+/**
+ * @brief A class for a quiz user interface.
+ *
+ * This class represents a user interface for a mountain quiz game. The class
+ * keeps track of the user's responses, scores, and other game statistics, and
+ * provides methods for starting and running the game, as well as printing
+ * the final game results.
+ */
 
 class userInterface
 {
+private:
+    string UserResponse; // keep track of the user's response
+    string playerName; // keep track of the playersName
+    int correctScore = 0; // keep track of the user's correct answers
+    int incorrectScore = 0; // keep track of the users wrong answers
+    int questions = 0; // keep track of the number of questions asked
+    std::vector<std::pair<std::string, double>> correct_answers; // keep track of correct answers and their response times
+    std::vector<std::pair<std::string, double>> incorrect_answers; // keep track of correct answers and their response times
+
 public:
 
+    /**
+   * @brief Starts the quiz game and provides instructions to the user.
+   *
+   * This method displays a welcome message and provides instructions for
+   * the user to play the game. The method prompts the user to start the
+   * game by typing "yes", and exits the program if the user types "no".
+   * 
+   * @note This method has a time complexity of O(1).
+   * This method doesn't depend on the input size and performs 
+   * a fixed number of operations regardless of the input.
+   */
+   
     void startQuiz()
     {
         cout << "\n\n---------------------------------------------------------------\n";
@@ -180,8 +199,26 @@ public:
         }
     }
 
+    /**
+     * @brief Runs the quiz game and keeps track of user's responses and scores.
+     *
+     * This method runs the quiz game and prompts the user to guess the mountain
+     * range of a randomly selected mountain. The user's response time is measured
+     * and recorded, and the user's score is updated based on the correctness and
+     * timeliness of their response. The game continues until the user types "exit"
+     * or "quit".
+     * @note This method has a time complexity of O(infinity) as it runs an infinite loop 
+     * and doesn't depend on the input size, so it doesn't have a finite time complexity.
+     */
+
     void mechanics()
     {
+        std::vector<std::string> filenames = { "Alps.txt", "Carpathians.txt", "Icelandic Highlands.txt", "Pyrenees.txt" };
+        Mountains mountains(filenames); // create a Mountains object
+        std::string mountain; // mountain name
+        std::string range; // mountain range
+        std::atomic<bool> timed_out(false); // flag to indicate if the user has timed out
+
         while (true)
         {
             // get a random mountain name
@@ -249,9 +286,19 @@ public:
         }
     }
 
-    void printResults(const std::string& playerName, int questions, int correctScore, int incorrectScore,
-        const std::vector<std::pair<std::string, double>>& correct_answers,
-        const std::vector<std::pair<std::string, double>>& incorrect_answers)
+    /**
+     * @brief Prints the final results of the quiz game.
+     *
+     * This method prints the final results of the quiz game, including the number
+     * of questions asked, the number of correct and incorrect answers, and the
+     * response times for each of the correct and incorrect answers.
+     * @note This method has a time complexity of O(n) as it
+     * iterates through the list of questions and answers once 
+     * to calculate the score and print the results. 
+     * The time complexity will depend on the number of questions and answers provided as input.
+     */
+
+    void printResults()
     {
         // print out the user's results
         std::cout << "\n\n\n";

@@ -7,7 +7,7 @@
 #include <boost/test/data/test_case.hpp>
 namespace bdata = boost::unit_test::data;
 
-BOOST_AUTO_TEST_SUITE(MountainsTestSuite)
+BOOST_AUTO_TEST_SUITE(TestSuite)
 
 int main(int argc, char* argv[])
 {

@@ -11,6 +11,6 @@ int main()
     userInterface UI;
     UI.startQuiz();
     UI.mechanics();
-    UI.printResults(playerName, questions, correctScore, incorrectScore, correct_answers, incorrect_answers);
+    UI.printResults();
     return 0;
 }

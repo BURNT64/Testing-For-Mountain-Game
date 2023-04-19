@@ -12,6 +12,9 @@
 
 using namespace std;
 
+//just a small note to say that the doxygen file is located in a folder called 
+//docx where the debug and test folder are
+
 /**
  * @brief Custom exception class for incorrect file formats. 
  * 
